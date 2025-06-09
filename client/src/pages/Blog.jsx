@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { assets, blog_data, comments_data } from '../assets/assets'
 import Moment from 'moment'
+import Footer from '../components/Footer'
+import Loader from '../components/Loader'
+import Navbar from '../components/Navbar'
 const Blog = () => {
 
   const {id} = useParams()
   const [data,setData] = useState(null)
   const [comments,setComments] = useState([])
+
+  const [name,setName] = useState('');
+  const[content,setContent] = useState('')
 
   const fetchBlogData = async () => {
     const  data = blog_data.find(item=>item._id === id)
@@ -27,6 +33,7 @@ const Blog = () => {
   }
   return data?(
     <div className=' relative'>
+      <Navbar/>
       <img src={assets.gradientBackground} alt=""  className=' absolute -top-50 -z-1 opacity-50'/>
       <div className=' text-center mt-20 text-gray-600'>
         <p className=' text-primary py-4 font-medium'>Published on {Moment(data.createdAt).format('MMMM Do YYYY')}</p>
@@ -59,16 +66,29 @@ const Blog = () => {
         {/*Add Component section */}
         <div className=' max-w-3xl mx-auto'>
           <p className=' font-semibold mb-4'>Add your comment</p>
-            <form action="" className=' flex flex-col items-start gap-4 max-w-lg'>
-               <input type="text" placeholder='Name' required 
+            <form onSubmit={addComet} className=' flex flex-col items-start gap-4 max-w-lg'>
+               <input onChange={(e)=>setName(e.target.value)} value={name} type="text" placeholder='Name' required 
                className=' w-full p-2 border border-gray-300'/>
-               <textarea  className='w-full p-2 border border-gray-300  rounded outline-one h-48' required></textarea>
-              <button onClick={addComet} className=' bg-primary text-white rounded p-2 px-8 hover:scale-105 transition-all cursor-pointer'>Submit</button>
+               <textarea onChange={(e)=>setContent(e.target.value)} value={content}  className='w-full p-2 border border-gray-300  rounded outline-one h-48' required></textarea>
+              <button type='submit' className=' bg-primary text-white rounded p-2 px-8 hover:scale-105 transition-all cursor-pointer'>Submit</button>
             </form>
         </div>
+        {/*Share Buttons */}
+        <div className=' my-24 max-w-3xl mx-auto'>
+             <p className=' font-semibold my-4'>Share this article on social media</p>
+            <div className=' flex'>
+               <img className=' cursor-pointer' src={assets.facebook_icon} width={50} alt="" />
+               <img className=' cursor-pointer' src={assets.twitter_icon} width={50} alt="" />
+               <img className=' cursor-pointer' src={assets.googleplus_icon} width={50} alt="" />
+            </div>
+        </div>
       </div>
+    <Footer/>
     </div>
-  ): <div>Loading ...</div>
+    
+  ): <div>
+    <Loader/>
+  </div>
 }
 
 export default Blog
