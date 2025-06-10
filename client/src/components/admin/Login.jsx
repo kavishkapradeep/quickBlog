@@ -15,15 +15,21 @@ const Login = () => {
             email,password
           })
 
+          console.log(email+password);
+          
           if (data.success) {
             setToken(data.token)
             localStorage.setItem('token',data.token)
             axios.defaults.headers.common['Authorization'] =  data.token;
           }else{
             toast.error(data.message)
+            console.log(data.message);
+            
           }
         } catch (error) {
           toast.error(error.message)
+          console.log(error.message);
+          
         }
     }
   return (
