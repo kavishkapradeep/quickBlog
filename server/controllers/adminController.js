@@ -8,8 +8,8 @@ export const adminLogin = async (req,res) => {
 
         console.log(process.env.ADMIN_EMAIL);
         
-        if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_Password) {
-            return res.json({success:false,message:process.env.ADMIN_Password})
+        if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
+            return res.json({success:false,message:"Invalid credentials"})
         }
 
         const token =jwt.sign({email},process.env.JWT_SECRET)
