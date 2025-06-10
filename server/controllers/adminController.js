@@ -17,7 +17,7 @@ export const adminLogin = async (req,res) => {
         res.json({success:true,token})
 
     } catch (error) {
-        res.json({success:false,message:error.message})
+        res.json({success:false,message:process.env.ADMIN_EMAIL})
     }
 }
 
