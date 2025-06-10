@@ -15,7 +15,7 @@ const Login = () => {
             email,password
           })
 
-          console.log(data);
+         
           
           if (data.success) {
             setToken(data.token)
@@ -23,12 +23,9 @@ const Login = () => {
             axios.defaults.headers.common['Authorization'] =  data.token;
           }else{
             toast.error(data.message)
-            console.log(data.message);
-            
           }
         } catch (error) {
           toast.error(error.message)
-          console.log(error.message);
           
         }
     }
